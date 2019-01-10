@@ -1,26 +1,25 @@
 
 const diffCalc = (req, res) => {
     let resp = req.body;
-    let vp = viewPointCalc(resp.views);
-    let cp = viewPointCalc(resp.comments);
-    let lp = viewPointCalc(resp.likes);
-    let sp = commentPointCalcc(resp.shares);
-    let subp = viewPointCalc(resp.subscribers);
-    let td = vp+cp+lp+sp+subp;
-    if(td == 0) td =1;
+    let td = calculateDiff(resp.views, resp.comments, resp.likes, resp.shares, resp.subscribers);
     return res.status(200).json({
         status : "success",
         message : {
-            "views" : vp,
-            "comments" : cp,
-            "likes" : lp,
-            "shares" : sp,
-            "subscribers" : subp,
             "total_difficulty" : td
         }
     });
 };
 
+const calculateDiff = (views, comments, likes, shares, subscribers) => {
+    let vp = viewPointCalc(views);
+    let cp = viewPointCalc(comments);
+    let lp = viewPointCalc(likes);
+    let sp = commentPointCalcc(shares);
+    let subp = viewPointCalc(subscribers);
+    let td = vp+cp+lp+sp+subp;
+    if(td == 0) td =1;
+    return td
+}
 
 const viewPointCalc = views => {
     var point;
@@ -80,4 +79,7 @@ const commentPointCalcc = comments => {
     return point;
 };
 
-module.exports = diffCalc;
+module.exports = {
+                    diffCalc :  diffCalc,
+                    calcDiff : calculateDiff
+                };

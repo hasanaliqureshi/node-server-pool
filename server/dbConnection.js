@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const config = require("./config/config");
 
 const URI = config.mongoURI;
-mongoose.connect(URI, {"userNewUrlParser" : true});
+mongoose.connect(URI, {"useNewUrlParser" : true});
 
 mongoose.connection.on("connected", () => {
     console.log("MongoDB Connected!");

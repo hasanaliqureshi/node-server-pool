@@ -4,6 +4,6 @@ const router = express.Router();
 const cors = require("cors");
 const corsOptions = require("../config/cors");
 
-router.post("/api/diffcalc", cors(corsOptions), diffcalc);
+router.post("/api/diffcalc", cors(corsOptions), diffcalc.diffCalc);
 
 module.exports = router;
