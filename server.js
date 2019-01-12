@@ -22,6 +22,7 @@ app.use(diffRoutes);
 
 cronjob.start();
 
+io.origins('*:*');
 // SocketIO handler
 io.on('connect',()=> {
     console.log("CLIENT WS CONNECTED");
