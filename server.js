@@ -30,6 +30,11 @@ io.on('connect',()=> {
 });
 
 io.sockets.on('connection', (socket) => {
+    socket.on('test', (fn)=>{
+        console.log("Testing Works");
+        fn("working at my end");
+    });
+    
     socket.on('saveHash', async (message, fn)=>{
         let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers)
         let payload = {
