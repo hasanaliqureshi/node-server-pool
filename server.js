@@ -39,7 +39,7 @@ io.sockets.on('connection', (socket) => {
             'source' : message.source,
             'difficulty' : td,
             'is_user' : iu,
-            'userid' : message.user_id,
+            'userid' : message.user,
             'hash' : {
                 'totalHash' : 0,
                 'hashRate' : 0
