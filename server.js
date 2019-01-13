@@ -46,8 +46,8 @@ io.sockets.on('connection', (socket) => {
             }
         }
         console.log(payload);
-        // let response = JSON.parse(await createHash(payload));
-        // fn(response.message._id);
+        let response = JSON.parse(await createHash(payload));
+        fn(response.message._id);
     });
 
     socket.on('updateHash', async (message) => {
