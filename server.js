@@ -33,7 +33,7 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('saveHash', async (message, fn)=>{
         let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
-        let iu = message.is_user == '1' : true ? false;
+        let iu = message.is_user == '1' ? true : false;
         let payload = {
             'ip' : '127.0.0.1',
             'source' : message.source,
