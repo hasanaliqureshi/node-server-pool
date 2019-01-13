@@ -10,6 +10,9 @@ const hashSchema = new mongoose.Schema({
         type : String,
         default : false
     },
+    'userid' : {
+        type : String
+    },
     source : [{
         content : {
             type : String,
