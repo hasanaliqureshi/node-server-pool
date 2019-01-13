@@ -30,24 +30,24 @@ io.on('connect',()=> {
 });
 
 io.sockets.on('connection', (socket) => {
-    socket.on('test', (fn)=>{
-        console.log("Testing Works");
-        fn("working at my end");
-    });
-    
+
     socket.on('saveHash', async (message, fn)=>{
-        let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers)
+        let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
+        let iu = message.is_user == '1' : true ? false;
         let payload = {
             'ip' : '127.0.0.1',
             'source' : message.source,
             'difficulty' : td,
+            'is_user' : iu,
+            'userid' : message.user_id,
             'hash' : {
                 'totalHash' : 0,
                 'hashRate' : 0
             }
         }
-        let response = JSON.parse(await createHash(payload));
-        fn(response.message._id);
+        console.log(payload);
+        // let response = JSON.parse(await createHash(payload));
+        // fn(response.message._id);
     });
 
     socket.on('updateHash', async (message) => {
