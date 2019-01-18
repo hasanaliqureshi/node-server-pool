@@ -2,7 +2,8 @@ const express = require("express");
 const config = require("./server/config/config");
 const bodyParser = require("body-parser");
 const diffRoutes = require("./server/routes/diff");
-const createHash = require("./server/socket_controllers/createHash");
+const hashRoutes = require("./server/routes/hash");
+// const createHash = require("./server/socket_controllers/createHash");
 const updateHash = require("./server/socket_controllers/updateHash");
 const http = require('http');
 const cronjob = require('./server/cronjob');
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(diffRoutes);
-
+app.use(hashRoutes);
 // cronjob.start();
 
 io.origins('*:*');
@@ -31,24 +32,24 @@ io.on('connect',()=> {
 
 io.sockets.on('connection', (socket) => {
 
-    socket.on('saveHash', async (message, fn)=>{
-        let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
-        let iu = message.is_user == '1' ? true : false;
-        let payload = {
-            'ip' : '127.0.0.1',
-            'source' : message.source,
-            'difficulty' : td,
-            'is_user' : iu,
-            'userid' : message.user,
-            'hash' : {
-                'totalHash' : 0,
-                'hashRate' : 0
-            }
-        }
-        console.log(payload);
-        let response = JSON.parse(await createHash(payload));
-        fn(response.message._id);
-    });
+    // socket.on('saveHash', async (message, fn)=>{
+    //     let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
+    //     let iu = message.is_user == '1' ? true : false;
+    //     let payload = {
+    //         'ip' : '127.0.0.1',
+    //         'source' : message.source,
+    //         'difficulty' : td,
+    //         'is_user' : iu,
+    //         'userid' : message.user,
+    //         'hash' : {
+    //             'totalHash' : 0,
+    //             'hashRate' : 0
+    //         }
+    //     }
+    //     console.log(payload);
+    //     let response = JSON.parse(await createHash(payload));
+    //     fn(response.message._id);
+    // });
 
     socket.on('updateHash', async (message) => {
         let updateLoad = {
