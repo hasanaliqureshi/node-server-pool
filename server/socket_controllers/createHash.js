@@ -1,7 +1,22 @@
 const hashSchema = require("../models/hash");
+const diffcalc = require('../controllers/diff.js');
 
 const createHash =(req, res) => {
-        let hash = new hashSchema(req.body);
+        let message = req.body;
+        let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
+        let iu = message.is_user == '1' ? true : false;
+        let payload = {
+            'ip' : message.ip,
+            'source' : message.source,
+            'difficulty' : td,
+            'is_user' : iu,
+            'userid' : message.user,
+            'hash' : {
+                'totalHash' : 0,
+                'hashRate' : 0
+            }
+        };
+        let hash = new hashSchema(payload);
         hash.save().then(doc => {
             res.status(200).json({
                 message : {
