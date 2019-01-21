@@ -21,7 +21,7 @@ const createHash =(req, res) => {
             res.status(200).json({
                 message : {
                     "status" : "success",
-                    "doc" : doc._id
+                    "doc" : doc
                 }
             })
         }).catch(err=>{
