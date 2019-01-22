@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(diffRoutes);
 app.use(hashRoutes);
-// cronjob.start();
+cronjob.start();
 
 io.origins('*:*');
 // SocketIO handler

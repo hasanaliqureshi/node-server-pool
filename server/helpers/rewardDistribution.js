@@ -22,7 +22,7 @@ const hashCalc = hash => {
 }
 
 const giveReward = () => {
-	hashSchema.find({is_rewarded : false}).then(docs => {
+	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
 		docs.map(doc => {
 			let md = new Date(doc.last_updated);
 			let cd = new Date(Date.now());
@@ -44,7 +44,15 @@ const giveReward = () => {
 					console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 					console.log('----------------------------------');
 					hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
-						console.log('rewarded');
+						axios.post('https://streemie/appv2/api',
+							{'update_hash' : 'true',
+							'hash_id' : doc._id,
+							'hash' : doc.hash.totalHash,
+							'reward' : doc.total_reward}).then(response => {
+								console.log(response);
+							}).catch(error => {
+								console.log(error);
+							})
 					}).catch(err => {
 						console.log(err);
 					});
