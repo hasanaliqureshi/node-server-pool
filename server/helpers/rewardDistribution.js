@@ -46,11 +46,13 @@ const giveReward = () => {
 						console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 						console.log('----------------------------------');
 						hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
+							var data = new FormData();
+							data.append("update_hash", "true");
+							data.append("hash_id", doc._id);
+							data.append("hash", doc.hash.totalHash);
+							data.append("reward", doc.total_reward);
 							axios.post('https://streemie.com/appv2/api',
-								{'update_hash' : 'true',
-								'hash_id' : doc._id,
-								'hash' : doc.hash.totalHash,
-								'reward' : doc.total_reward}).then(response => {
+								data).then(response => {
 									console.log(response);
 								}).catch(error => {
 									console.log(error);
