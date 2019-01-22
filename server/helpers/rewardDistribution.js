@@ -21,7 +21,7 @@ const hashCalc = hash => {
 }
 
 const giveReward = () => {
-	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
+	hashSchema.find({is_rewarded : false}).then(docs => {
 		docs.map(doc => {
 			if(doc.last_updated){
 				console.log(doc.last_updated);
@@ -55,6 +55,9 @@ const giveReward = () => {
 							  url:     'https://streemie.com/appv2/api',
 							  body:    "update_hash=true&hash_id="+doc._id+"&hash="+doc.hash.totalHash+"&reward="+doc.total_reward+"&userid="+doc.userid
 							}, function(error, response, body){
+								if(error){
+									console.log(error);
+								}
 							  console.log(body);
 							});
 						}).catch(err => {
