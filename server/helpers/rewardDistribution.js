@@ -66,22 +66,7 @@ const giveReward = () => {
 							});
 						});		
 				};
-			}else{
-				hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : 0, 'hash' : {'totalHash' : 0, 'hashRate' : 0}}, {new: true}).then(doc=> {
-						request.post({
-						  headers: {'content-type' : 'application/x-www-form-urlencoded'},
-						  url:     'https://streemie.com/appv2/api',
-						  body:    "update_hash=true&hash_id="+doc._id+"&hash="+doc.hash.totalHash+"&reward="+doc.total_reward+"&userid="+doc.userid
-						}, function(error, response, body){
-							if(error){
-								console.log(error);
-							}
-						  console.log(body);
-						});
-					}).catch(err => {
-						console.log(err);
-					});
-			}	
+			}
 		});
 	}).catch(err => {
 		console.log(err);
