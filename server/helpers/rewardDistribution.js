@@ -1,5 +1,5 @@
 const hashSchema = require('../models/hash');
-
+const axios = require('axios');
 
 const hashCalc = hash => {
     var point;
@@ -23,9 +23,7 @@ const hashCalc = hash => {
 
 const giveReward = () => {
 	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
-		// console.log(docs.length);
 		docs.map(doc => {
-			console.log(doc._id);
 			if(doc.last_updated){
 				console.log(doc.last_updated);
 				let md = new Date(doc.last_updated);
