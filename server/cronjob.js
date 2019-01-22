@@ -3,6 +3,6 @@ const gr = require('./helpers/rewardDistribution.js');
 
 const task = cron.schedule('*/5 * * * * *', () => {
 	gr();
-},{scheduled = false});
+},{scheduled : false});
 
 module.exports = task;
