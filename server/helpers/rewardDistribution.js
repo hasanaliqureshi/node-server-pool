@@ -22,6 +22,7 @@ const hashCalc = hash => {
 }
 
 const giveReward = () => {
+	console.log('cron job action...');
 	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
 		docs.map(doc => {
 			let md = new Date(doc.last_updated);
