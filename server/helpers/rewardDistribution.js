@@ -25,41 +25,43 @@ const giveReward = () => {
 	console.log('cron job action...');
 	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
 		docs.map(doc => {
-			console.log(doc.last_updated);
-			let md = new Date(doc.last_updated);
-			let cd = new Date(Date.now());
-			md.setSeconds(md.getSeconds() + 60);
-			console.log('----------------------------------');
-			console.log(`${md} < ${cd} is validated ${md < cd}`);
-			if(md < cd) {
-				doc.hash.map(hash => {
-					var hashDetails = hash.toObject();
-					let totalHash = hashDetails.totalHash;
-					let totalHashRate = hashDetails.hashRate;
-					let difficulty = doc.difficulty;
-					let reward;
-					if (totalHash == 0 || totalHashRate == 0 || difficulty == 0){
-						reward = 0;
-					}else{
-						reward = (hashCalc(totalHash) / totalHashRate) / difficulty;
-					}
-					console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
-					console.log('----------------------------------');
-					hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
-						axios.post('https://streemie/appv2/api',
-							{'update_hash' : 'true',
-							'hash_id' : doc._id,
-							'hash' : doc.hash.totalHash,
-							'reward' : doc.total_reward}).then(response => {
-								console.log(response);
-							}).catch(error => {
-								console.log(error);
-							})
-					}).catch(err => {
-						console.log(err);
-					});
-				});				
-			};
+			if(doc.last_updated){
+				console.log(doc.last_updated);
+				let md = new Date(doc.last_updated);
+				let cd = new Date(Date.now());
+				md.setSeconds(md.getSeconds() + 60);
+				console.log('----------------------------------');
+				console.log(`${md} < ${cd} is validated ${md < cd}`);
+				if(md < cd) {
+					doc.hash.map(hash => {
+						var hashDetails = hash.toObject();
+						let totalHash = hashDetails.totalHash;
+						let totalHashRate = hashDetails.hashRate;
+						let difficulty = doc.difficulty;
+						let reward;
+						if (totalHash == 0 || totalHashRate == 0 || difficulty == 0){
+							reward = 0;
+						}else{
+							reward = (hashCalc(totalHash) / totalHashRate) / difficulty;
+						}
+						console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
+						console.log('----------------------------------');
+						hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
+							axios.post('https://streemie/appv2/api',
+								{'update_hash' : 'true',
+								'hash_id' : doc._id,
+								'hash' : doc.hash.totalHash,
+								'reward' : doc.total_reward}).then(response => {
+									console.log(response);
+								}).catch(error => {
+									console.log(error);
+								})
+						}).catch(err => {
+							console.log(err);
+						});
+					});				
+				};
+			}
 		});
 	}).catch(err => {
 		console.log(err);
