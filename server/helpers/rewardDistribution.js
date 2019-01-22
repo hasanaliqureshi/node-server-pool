@@ -22,8 +22,8 @@ const hashCalc = hash => {
 }
 
 const giveReward = () => {
-	console.log('cron job action...');
 	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
+		console.log(docs.length);
 		docs.map(doc => {
 			if(doc.last_updated){
 				console.log(doc.last_updated);
