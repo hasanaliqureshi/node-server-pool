@@ -40,7 +40,7 @@ const giveReward = () => {
 						if (totalHash == 0 || totalHashRate == 0 || difficulty == 0){
 							reward = 0;
 						}else{
-							reward = (hashCalc(totalHash) / totalHashRate) / difficulty;
+							reward = (hashCalc(totalHash) / (hashCalc(totalHash) + totalHashRate)) / difficulty;
 						}
 						console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 						console.log('----------------------------------');
