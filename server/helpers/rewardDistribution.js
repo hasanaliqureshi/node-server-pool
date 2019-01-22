@@ -35,10 +35,11 @@ const giveReward = () => {
 						var hashDetails = hash.toObject();
 						let totalHash = hashDetails.totalHash;
 						let totalHashRate = hashDetails.hashRate;
+						let difficulty;
 						if (doc.difficulty < 50) {
-							let difficulty = 100 - doc.difficulty;
+							difficulty = 100 - doc.difficulty;
 						}else {
-							let difficulty = doc.difficulty;	
+							difficulty = doc.difficulty;	
 						}
 						let reward;
 						if (totalHash == 0 || totalHashRate == 0 || difficulty == 0){
