@@ -1,6 +1,5 @@
 const hashSchema = require('../models/hash');
-const axios = require('axios');
-const qs = require('qs');
+var request = require("request");
 const hashCalc = hash => {
     var point;
     if(hash < 1){
@@ -47,15 +46,22 @@ const giveReward = () => {
 						console.log('----------------------------------');
 						hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
 				
-							axios.post('https://streemie.com/appv2/api',
-								qs.stringify({'update_hash' : 'true',
-								'hash_id' : doc._id,
-								'hash' : doc.hash.totalHash,
-								'reward' : doc.total_reward})).then(response => {
-									console.log(response);
-								}).catch(error => {
-									console.log(error);
-								})
+							var options = { method: 'POST',
+							  url: 'https://streemie.com/appv2/api',
+							  headers: 
+							   { 'Cache-Control': 'no-cache',
+							     'Content-Type': 'text/html',
+							     'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' },
+							  formData: 
+							   { update_hash: 'true',
+							     hash_id: doc._id,
+							     hash: doc.hash.totalHash,
+							     reward: doc.total_reward } };
+
+								request(options, function (error, response, body) {
+								  if (error) throw new Error(error);
+								  console.log(body);
+								});
 						}).catch(err => {
 							console.log(err);
 						});
