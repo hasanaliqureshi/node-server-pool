@@ -25,6 +25,7 @@ const giveReward = () => {
 	console.log('cron job action...');
 	hashSchema.find({is_rewarded : false, 'userid' : 6}).then(docs => {
 		docs.map(doc => {
+			console.log(doc.last_updated);
 			let md = new Date(doc.last_updated);
 			let cd = new Date(Date.now());
 			md.setSeconds(md.getSeconds() + 60);
