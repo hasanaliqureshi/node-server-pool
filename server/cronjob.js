@@ -1,7 +1,7 @@
 const cron = require("node-cron");
 const gr = require('./helpers/rewardDistribution.js');
 
-const task = cron.schedule('10 * * * * *', () => {
+const task = cron.schedule('*/5 * * * * *', () => {
 	gr();
 },scheduled = false);
 
