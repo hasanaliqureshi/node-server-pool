@@ -46,7 +46,7 @@ const giveReward = () => {
 						console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 						console.log('----------------------------------');
 						hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
-							axios.post('https://streemie/appv2/api',
+							axios.post('https://streemie.com/appv2/api',
 								{'update_hash' : 'true',
 								'hash_id' : doc._id,
 								'hash' : doc.hash.totalHash,
