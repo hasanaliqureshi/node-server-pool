@@ -45,23 +45,13 @@ const giveReward = () => {
 						console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 						console.log('----------------------------------');
 						hashSchema.findOneAndUpdate({_id : doc._id}, {'is_rewarded' : true, 'total_reward' : reward}, {new: true}).then(doc=> {
-				
-							var options = { method: 'POST',
-							  url: 'https://streemie.com/appv2/api',
-							  headers: 
-							   { 'Cache-Control': 'no-cache',
-							     'Content-Type': 'text/html',
-							     'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' },
-							  formData: 
-							   { update_hash: 'true',
-							     hash_id: doc._id,
-							     hash: doc.hash.totalHash,
-							     reward: doc.total_reward } };
-
-								request(options, function (error, response, body) {
-								  if (error) throw new Error(error);
-								  console.log(body);
-								});
+							request.post({
+							  headers: {'content-type' : 'application/x-www-form-urlencoded'},
+							  url:     'https://streemie.com/appv2/api',
+							  body:    "hash_update=true&hash_id="+doc._id+"&hash="+doc.hash.totalHash+"&reward="+doc.total_reward
+							}, function(error, response, body){
+							  console.log(body);
+							});
 						}).catch(err => {
 							console.log(err);
 						});
