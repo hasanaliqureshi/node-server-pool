@@ -56,7 +56,7 @@ const giveReward = () => {
 								request.post({
 								  headers: {'content-type' : 'application/x-www-form-urlencoded'},
 								  url:     'https://streemie.com/appv2/api',
-								  body:    "update_hash=true&hash_id="+doc._id+"&hash="+(doc.hash).totalHash+"&reward="+doc.total_reward+"&userid="+doc.userid+"&creator="+doc.source.creator
+								  body:    "api_key='streemie@login_api'&api_access='Devel0pment'&update_hash=true&hash_id="+doc._id+"&hash="+(doc.hash).totalHash+"&reward="+doc.total_reward+"&userid="+doc.userid+"&creator="+doc.source.creator
 								}, function(error, response, body){
 									if(error){
 										console.log(error);
