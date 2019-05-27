@@ -1,4 +1,6 @@
 const hashSchema = require('../models/hash');
+const config = require("../config/config");
+
 var request = require("request");
 const hashCalc = hash => {
     var point;
@@ -46,7 +48,7 @@ const giveReward = () => {
 							if (totalHash == 0 || totalHashRate == 0 || difficulty == 0){
 								reward = 0;
 							}else{
-								reward = ((hashCalc(totalHash) / (hashCalc(totalHash) + totalHashRate)) / difficulty).toFixed(3);
+								reward = ((hashCalc(totalHash) / (hashCalc(totalHash) + totalHashRate)) / difficulty).toFixed(confg.coinDecimal);
 							}
 							console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 							console.log('----------------------------------');
