@@ -48,7 +48,7 @@ const giveReward = () => {
 							if (totalHash == 0 || totalHashRate == 0 || difficulty == 0){
 								reward = 0;
 							}else{
-								reward = ((hashCalc(totalHash) / (hashCalc(totalHash) + totalHashRate)) / difficulty).toFixed(confg.coinDecimal);
+								reward = ((hashCalc(totalHash) / (hashCalc(totalHash) + totalHashRate)) / difficulty).toFixed(config.coinDecimal);
 							}
 							console.log(`(${totalHash} / ${totalHashRate}) / ${difficulty} == ${reward}`);
 							console.log('----------------------------------');
