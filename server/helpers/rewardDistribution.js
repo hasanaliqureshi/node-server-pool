@@ -62,6 +62,7 @@ const giveReward = () => {
 										console.log(error);
 									}
 								  console.log(body);
+								  console.log(response);
 								});
 							}).catch(err => {
 								console.log(err);
