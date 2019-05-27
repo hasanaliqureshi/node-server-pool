@@ -32,24 +32,24 @@ io.on('connect',()=> {
 
 io.sockets.on('connection', (socket) => {
 
-    // socket.on('saveHash', async (message, fn)=>{
-    //     let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
-    //     let iu = message.is_user == '1' ? true : false;
-    //     let payload = {
-    //         'ip' : '127.0.0.1',
-    //         'source' : message.source,
-    //         'difficulty' : td,
-    //         'is_user' : iu,
-    //         'userid' : message.user,
-    //         'hash' : {
-    //             'totalHash' : 0,
-    //             'hashRate' : 0
-    //         }
-    //     }
-    //     console.log(payload);
-    //     let response = JSON.parse(await createHash(payload));
-    //     fn(response.message._id);
-    // });
+    socket.on('saveHash', async (message, fn)=>{
+        let td = diffcalc.calcDiff(message.views, message.comments, message.likes, message.shares, message.subscribers);
+        let iu = message.is_user == '1' ? true : false;
+        let payload = {
+            'ip' : '127.0.0.1',
+            'source' : message.source,
+            'difficulty' : td,
+            'is_user' : iu,
+            'userid' : message.user,
+            'hash' : {
+                'totalHash' : 0,
+                'hashRate' : 0
+            }
+        }
+        console.log(payload);
+        let response = JSON.parse(await createHash(payload));
+        fn(response.message._id);
+    });
 
     socket.on('updateHash', async (message) => {
         let updateLoad = {
